@@ -1,11 +1,19 @@
 package bencoder
 
+import (
+	"bufio"
+	"io"
+)
+
 func Encode(val any) []byte {
 	en := encoder{}
 	en.encodeUnknown(val)
 	return en.bytes()
 }
 
-func Decode(s string) (map[string]any, error) {
-	return nil, nil
+func Decode(rdr io.Reader) (any, error) {
+	de := decoder{
+		rdr: bufio.NewReader(rdr),
+	}
+	return de.decodeUnknown()
 }
